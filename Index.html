@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RJ Préstamos | Crédito Digital Constanza</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1b5e20;
+            --secondary: #2d7a4d;
+            --accent: #c0ca33;
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --radius: 24px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; }
+
+        /* --- NAVEGACIÓN --- */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 18px 6%; background: var(--white);
+            position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        .logo { font-size: 24px; font-weight: 800; color: var(--primary); letter-spacing: -1px; }
+        .logo span { color: var(--accent); }
+        .badge-loc { font-size: 11px; font-weight: 700; color: var(--secondary); background: #f1f8e9; padding: 6px 14px; border-radius: 50px; }
+
+        /* --- HERO & URGENCIA --- */
+        .hero { padding: 60px 6% 40px; text-align: center; max-width: 1200px; margin: 0 auto; }
+        .urgency-pill { display: inline-block; background: #fee2e2; color: #dc2626; padding: 8px 16px; border-radius: 50px; font-size: 12px; font-weight: 800; margin-bottom: 25px; border: 1px solid #fecaca; }
+        .hero h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800; color: var(--primary); line-height: 1.1; margin-bottom: 20px; }
+        .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin: 0 auto 40px; }
+
+        /* --- SIMULADOR MASTER --- */
+        .main-card {
+            background: var(--white); border-radius: 40px; overflow: hidden;
+            box-shadow: var(--shadow); display: flex; flex-direction: column; border: 1px solid #e2e8f0;
+        }
+        @media (min-width: 900px) { .main-card { flex-direction: row; } }
+
+        .sim-left { flex: 1.5; padding: 50px 40px; }
+        .sim-right { 
+            flex: 1; background: linear-gradient(145deg, var(--primary), #0a3311); 
+            padding: 50px 40px; color: white; text-align: center;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+
+        .input-group { margin-bottom: 35px; text-align: left; }
+        .label-row { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 12px; color: var(--primary); }
+        input[type=range] { width: 100%; height: 8px; border-radius: 10px; background: #e2e8f0; -webkit-appearance: none; accent-color: var(--secondary); cursor: pointer; }
+        .val-display { font-size: 22px; color: var(--secondary); font-weight: 800; }
+        .price-display { font-size: 4rem; font-weight: 800; color: var(--accent); margin: 15px 0; letter-spacing: -2px; }
+
+        .btn-apply { 
+            width: 100%; background: var(--accent); color: var(--primary); padding: 22px; 
+            border-radius: 20px; border: none; font-weight: 800; font-size: 1.2rem; 
+            cursor: pointer; transition: 0.3s;
+        }
+        .btn-apply:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(192,202,51,0.3); }
+
+        /* --- SECCIÓN PASOS --- */
+        .section-title { text-align: center; margin: 80px 0 40px; font-size: 2rem; color: var(--primary); }
+        .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 0 6%; max-width: 1200px; margin: 0 auto; }
+        .step-card { background: white; padding: 40px; border-radius: 30px; text-align: center; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .step-icon { width: 50px; height: 50px; background: var(--accent); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-weight: 800; font-size: 1.2rem; }
+
+        /* --- TESTIMONIOS --- */
+        .testimonials { background: #f1f5f9; padding: 80px 6%; margin-top: 80px; }
+        .t-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
+        .t-card { background: white; padding: 35px; border-radius: 30px; border: 1px solid #e2e8f0; position: relative; }
+        .t-card p { font-style: italic; color: var(--text-main); margin-bottom: 20px; }
+        .t-author { font-weight: 800; color: var(--secondary); font-size: 0.9rem; }
+
+        /* --- CATALOGO --- */
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 0 6%; max-width: 1200px; margin: 0 auto 80px; }
+        .p-card { background: white; border-radius: 30px; border: 1px solid #f1f5f9; overflow: hidden; transition: 0.3s; text-align: center; }
+        .p-card:hover { transform: translateY(-10px); box-shadow: var(--shadow); }
+        .p-img { padding: 40px; font-size: 4rem; background: #fafafa; }
+        .p-info { padding: 30px; }
+
+        /* --- FAQ --- */
+        .faq-box { max-width: 800px; margin: 0 auto 100px; padding: 0 6%; }
+        details { background: white; padding: 20px; border-radius: 20px; border: 1px solid #e2e8f0; margin-bottom: 12px; cursor: pointer; transition: 0.3s; }
+        details summary { font-weight: 700; color: var(--primary); }
+        details p { margin-top: 15px; font-size: 14px; color: var(--text-muted); }
+
+        /* --- MODAL FORMULARIO AVANZADO --- */
+        .modal { 
+            position: fixed; inset: 0; background: rgba(15,23,42,0.9); 
+            display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; backdrop-filter: blur(8px);
+        }
+        .modal-content { 
+            background: white; padding: 40px; border-radius: 35px; width: 100%; max-width: 600px; 
+            max-height: 90vh; overflow-y: auto; position: relative;
+        }
+        .close { position: absolute; top: 25px; right: 25px; cursor: pointer; font-size: 20px; font-weight: 800; color: #94a3b8; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .full { grid-column: span 2; }
+        .form-item label { display: block; font-weight: 700; font-size: 13px; margin-bottom: 8px; color: var(--primary); }
+        .form-item input { width: 100%; padding: 14px; border: 2px solid #f1f5f9; border-radius: 12px; outline: none; transition: 0.3s; }
+        .form-item input:focus { border-color: var(--accent); }
+
+        .upload-section { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .upload-btn { background: #f8fafc; border: 2px dashed #cbd5e1; padding: 15px 10px; border-radius: 15px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .upload-btn:hover { border-color: var(--accent); background: #f1f8e9; }
+        .upload-btn i { font-size: 20px; display: block; margin-bottom: 5px; }
+        .upload-btn span { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+
+        footer { background: #0a3311; color: white; padding: 80px 6% 40px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">RJ<span>PRÉSTAMOS</span></div>
+        <div class="badge-loc">📍 Oficina Constanza</div>
+    </nav>
+
+    <section class="hero">
+        <div class="urgency-pill">🔥 95% de los préstamos de hoy ya aprobados</div>
+        <h1>El crédito que necesitas, <br> con la seriedad que buscas.</h1>
+        <p>Aprobación inmediata en Constanza. Solicita tu desembolso hoy mismo cargando tus documentos de forma segura.</p>
+
+        <div class="main-card">
+            <div class="sim-left">
+                <div class="input-group">
+                    <div class="label-row">
+                        <span>¿Cuánto dinero necesitas?</span>
+                        <span class="val-display">RD$ <span id="mVal">30,000</span></span>
+                    </div>
+                    <input type="range" id="mRange" min="5000" max="300000" step="5000" value="30000">
+                </div>
+                <div class="input-group">
+                    <div class="label-row">
+                        <span>¿En qué tiempo pagarás?</span>
+                        <span class="val-display"><span id="pVal">12</span> Meses</span>
+                    </div>
+                    <input type="range" id="pRange" min="3" max="36" step="1" value="12">
+                </div>
+                <div style="display: flex; gap: 20px; font-size: 12px; font-weight: 600; color: var(--text-muted);">
+                    <span>✅ Sin fiador</span> <span>✅ Tasa fija</span> <span>✅ Seguro incluido</span>
+                </div>
+            </div>
+            <div class="sim-right">
+                <p style="font-weight: 600; opacity: 0.8; font-size: 14px; letter-spacing: 1px;">CUOTA MENSUAL ESTIMADA</p>
+                <div class="price-display" id="res">RD$ 3,400</div>
+                <button class="btn-apply" onclick="openModal()">INICIAR SOLICITUD</button>
+            </div>
+        </div>
+    </section>
+
+    <h2 class="section-title">Garantía de Confianza</h2>
+    <div class="steps-grid">
+        <div class="step-card">
+            <div class="step-icon">1</div>
+            <h3>Calcula</h3>
+            <p style="font-size: 14px; color: var(--text-muted);">Ajusta el monto y plazo que mejor se adapte a tu bolsillo.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-icon">2</div>
+            <h3>Documenta</h3>
+            <p style="font-size: 14px; color: var(--text-muted);">Sube fotos de tu cédula y una selfie para validación inmediata.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-icon">3</div>
+            <h3>Recibe</h3>
+            <p style="font-size: 14px; color: var(--text-muted);">Transferencia o efectivo en nuestra oficina de Constanza.</p>
+        </div>
+    </div>
+
+    <div class="testimonials">
+        <h2 style="text-align: center; margin-bottom: 50px; color: var(--primary);">Nuestros Clientes</h2>
+        <div class="t-grid">
+            <div class="t-card">
+                <p>"La mejor opción en Constanza. Me resolvieron el mismo día para invertir en mi siembra."</p>
+                <span class="t-author">Ramón Peralta - Agricultor</span>
+            </div>
+            <div class="t-card">
+                <p>"Súper rápido y seguro. Subí mis documentos por la web y a los 10 minutos ya estaba aprobado."</p>
+                <span class="t-author">Carmen Sosa - Comerciante</span>
+            </div>
+            <div class="t-card">
+                <p>"Excelente trato y muy profesionales. Las cuotas son fijas y no hay sorpresas al final."</p>
+                <span class="t-author">Luis Méndez - Empleado Público</span>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-title">Financiamiento de Equipos</h2>
+    <div class="catalog-grid">
+        <div class="p-card">
+            <div class="p-img">🔊</div>
+            <div class="p-info">
+                <h3>Audio Profesional</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin: 10px 0;">Sistemas de sonido de alta fidelidad.</p>
+                <button class="btn-apply" style="padding: 10px; font-size: 0.9rem;" onclick="openModal()">Financiar</button>
+            </div>
+        </div>
+        <div class="p-card">
+            <div class="p-img">📺</div>
+            <div class="p-info">
+                <h3>Smart TV 4K</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin: 10px 0;">Lo último en entretenimiento hogar.</p>
+                <button class="btn-apply" style="padding: 10px; font-size: 0.9rem;" onclick="openModal()">Financiar</button>
+            </div>
+        </div>
+        <div class="p-card">
+            <div class="p-img">📱</div>
+            <div class="p-info">
+                <h3>Móviles 5G</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin: 10px 0;">Equipos de última generación.</p>
+                <button class="btn-apply" style="padding: 10px; font-size: 0.9rem;" onclick="openModal()">Financiar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-box">
+        <h2 style="text-align: center; margin-bottom: 30px; color: var(--primary);">Dudas Frecuentes</h2>
+        <details>
+            <summary>¿Qué documentos necesito subir?</summary>
+            <p>Necesitas foto de tu cédula (frente y atrás) y una selfie clara de tu rostro para validar tu identidad.</p>
+        </details>
+        <details>
+            <summary>¿Cuánto tardan en aprobar?</summary>
+            <p>Una vez completado el formulario, nuestro equipo en Constanza te contacta en menos de 15 minutos.</p>
+        </details>
+        <details>
+            <summary>¿Es seguro subir mi cédula?</summary>
+            <p>Totalmente. Usamos encriptación de datos y solo nuestro personal autorizado maneja tu información personal.</p>
+        </details>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 style="color: var(--primary);">Solicitud Express</h2>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 25px;">Oficina Constanza | Validación de Datos</p>
+            
+            <form id="loanForm" class="form-grid">
+                <div class="form-item full">
+                    <label>Nombre y Apellidos</label>
+                    <input type="text" id="fn" placeholder="Como aparece en la cédula" required>
+                </div>
+                <div class="form-item">
+                    <label>Cédula</label>
+                    <input type="text" id="fc" placeholder="001-0000000-0" required>
+                </div>
+                <div class="form-item">
+                    <label>Teléfono WhatsApp</label>
+                    <input type="tel" id="ft" placeholder="829-000-0000" required>
+                </div>
+                <div class="form-item full">
+                    <label>Documentación Requerida</label>
+                    <div class="upload-section">
+                        <div class="upload-btn" onclick="alert('Cámara / Archivos activados')">
+                            <i>🪪</i> <span>Cédula Frente</span>
+                        </div>
+                        <div class="upload-btn" onclick="alert('Cámara / Archivos activados')">
+                            <i>🔄</i> <span>Cédula Atrás</span>
+                        </div>
+                        <div class="upload-btn" onclick="alert('Cámara / Archivos activados')">
+                            <i>📸</i> <span>Selfie</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-item full">
+                    <label>Ocupación / Ingresos</label>
+                    <input type="text" id="fj" placeholder="Ej: Negocio propio / Empleado" required>
+                </div>
+                <button type="submit" class="btn-apply full" style="margin-top: 10px;">ENVIAR SOLICITUD POR WHATSAPP</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <h2 style="letter-spacing: -1px; margin-bottom: 10px;">RJ<span>PRÉSTAMOS</span></h2>
+        <p style="opacity: 0.6; font-size: 14px;">Servicio Financiero Transparente - Constanza, RD.</p>
+        <div style="margin-top: 30px; font-size: 11px; opacity: 0.4;">© 2026 Todos los derechos reservados. El uso de este sitio implica la aceptación de políticas de seguridad.</div>
+    </footer>
+
+    <script>
+        const mR = document.getElementById('mRange'), pR = document.getElementById('pRange');
+        const mV = document.getElementById('mVal'), pV = document.getElementById('pVal');
+        const res = document.getElementById('res'), modal = document.getElementById('modal');
+
+        function calc() {
+            const m = parseInt(mR.value), p = parseInt(pR.value);
+            mV.innerText = m.toLocaleString(); pV.innerText = p;
+            // Tasa Constanza: 3.2% aprox cuota fija
+            const cuota = (m / p) + (m * 0.032);
+            res.innerText = "RD$ " + Math.round(cuota).toLocaleString();
+        }
+
+        function openModal() { modal.style.display = 'flex'; }
+        function closeModal() { modal.style.display = 'none'; }
+
+        mR.addEventListener('input', calc); pR.addEventListener('input', calc);
+        calc();
+
+        document.getElementById('loanForm').onsubmit = (e) => {
+            e.preventDefault();
+            const texto = `🚨 *NUEVA SOLICITUD WEB - CONSTANZA* 🚨\n\n` +
+                          `👤 *Nombre:* ${document.getElementById('fn').value}\n` +
+                          `🪪 *Cédula:* ${document.getElementById('fc').value}\n` +
+                          `📱 *WhatsApp:* ${document.getElementById('ft').value}\n` +
+                          `💼 *Ocupación:* ${document.getElementById('fj').value}\n\n` +
+                          `💰 *Monto:* RD$ ${mV.innerText}\n` +
+                          `🗓️ *Plazo:* ${pV.innerText} meses\n` +
+                          `📉 *Cuota:* ${res.innerText}\n\n` +
+                          `📂 _El cliente ya tiene los documentos listos para enviar._`;
+            window.location.href = "https://wa.me/18299096655?text=" + encodeURIComponent(texto);
+        }
+    </script>
+</body>
+</html>
